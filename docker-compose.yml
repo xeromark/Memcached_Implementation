@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  memcached:
+    image: memcached:latest
+    container_name: memcached
+    ports:
+      - "11211:11211"
+    networks:
+      - memcached_network
+    environment:
+      - MEMCACHED_MEMORY=64
+      - MEMCACHED_MAX_CONNECTIONS=1024
+
+networks:
+  memcached_network:
+    driver: bridge
