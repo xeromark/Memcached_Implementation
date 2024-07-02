@@ -42,4 +42,14 @@ cassandra:
 ---
 # Others:
 
+Row count:
+
     SELECT COUNT(*) FROM mykeyspace.dishes;
+
+Only 5 Row:
+
+    SELECT * FROM dishes LIMIT 5;
+
+Fetch something:
+
+    SELECT price FROM mykeyspace.dishes WHERE name='Platano';

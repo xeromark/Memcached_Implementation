@@ -1,5 +1,7 @@
 from pymemcache.client import base as memcache_client
 from cassandra.cluster import Cluster
+import time
+begin_time = time.time()
 
 # connect to Memcached
 memcached = memcache_client.Client(('localhost', 11211))
@@ -33,3 +35,11 @@ if price_dish:
     print(f"The dish {dish_name}, price: {price_dish}")
 else:
     print(f"{dish_name} not found in data base.")
+
+
+end_time = time.time()
+# Calcula el tiempo transcurrido
+delta_time = end_time - begin_time
+
+print(f"Dish '{dish_name}' delay: '{delta_time}' seconds.")
+

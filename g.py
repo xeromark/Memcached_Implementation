@@ -36,7 +36,7 @@ comidas = [
 archivo_salida = 'dishes'
 
 # Numero de entradas que quieres generar
-num_entradas = 1000000
+num_entradas = 10000000
 
 # Abre el archivo en modo escritura
 with open(archivo_salida, 'w') as archivo:
