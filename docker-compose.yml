@@ -7,11 +7,16 @@ services:
     ports:
       - "11211:11211"
     networks:
-      - memcached_network
-    environment:
-      - MEMCACHED_MEMORY=64
-      - MEMCACHED_MAX_CONNECTIONS=1024
+      - my_network
+
+  cassandra:
+    image: cassandra:latest
+    container_name: cassandra
+    ports:
+      - "9042:9042"
+    networks:
+      - my_network
 
 networks:
-  memcached_network:
+  my_network:
     driver: bridge
