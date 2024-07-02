@@ -16,7 +16,7 @@ services:
       - database
 
   database:
-    image: mysql:5.7
+    image: mysql:latest
     container_name: database
     ports:
       - "3306:3306"
@@ -30,6 +30,7 @@ services:
     volumes:
       - ./DB:/home
     command: ["sh", "-c", "mysql -u user --password ='password' database < /home/Tuvieja.sql"]
+
 networks:
   memcached_network:
     driver: bridge
