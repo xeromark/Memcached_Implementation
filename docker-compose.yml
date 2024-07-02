@@ -1,6 +1,21 @@
 version: '3.8'
 
 services:
+
+  web:
+    image: php:7.4-apache
+    container_name: web
+    ports:
+      - "80:80"
+    networks:
+      - memcached_network
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - database
+      - memcached
+
+
   memcached:
     image: memcached:latest
     container_name: memcached
@@ -11,6 +26,21 @@ services:
     environment:
       - MEMCACHED_MEMORY=64
       - MEMCACHED_MAX_CONNECTIONS=1024
+    depends_on:
+      - database
+
+  database:
+    image: mysql:5.7
+    container_name: database
+    ports:
+      - "3306:3306"
+    networks:
+      - memcached_network
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=database
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
 
 networks:
   memcached_network:
