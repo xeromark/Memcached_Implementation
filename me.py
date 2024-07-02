@@ -1,35 +1,35 @@
 from pymemcache.client import base as memcache_client
 from cassandra.cluster import Cluster
 
-# Conectar a Memcached
+# connect to Memcached
 memcached = memcache_client.Client(('localhost', 11211))
 
-# Conectar a Cassandra
+# connect to Cassandra
 cluster = Cluster(['localhost'])
 session = cluster.connect('mykeyspace')
 
-# Función para obtener datos de Memcached o Cassandra
-def get_fruit_description(fruit_name):
-    # Intentar obtener el valor de Memcached
-    cached_value = memcached.get(fruit_name)
+# function to get data
+def get_price_dish(dish_name):
+    # First, it Try to get data in Memcached
+    cached_value = memcached.get(dish_name)
     if cached_value:
         return cached_value.decode('utf-8')
 
-    # Si no está en Memcached, buscar en Cassandra
-    query = "SELECT description FROM fruits WHERE name=%s"
-    result = session.execute(query, (fruit_name,))
-    description = result.one()
-    if description:
-        # Almacenar el resultado en Memcached para futuras búsquedas
-        memcached.set(fruit_name, description.description)
-        return description.description
+    # If not found, fetch in Cassandra
+    query = "SELECT price FROM dishes WHERE name=%s"
+    result = session.execute(query, (dish_name,))
+    price_dish = result.one()
+    if price_dish:
+        # store in Memcached to future searches
+        memcached.set(dish_name, price_dish.price)
+        return price_dish.price
 
     return None
 
-# Prueba de la función
-fruit_name = 'Platano'
-description = get_fruit_description(fruit_name)
-if description:
-    print(f"Descripción de {fruit_name}: {description}")
+# Test function
+dish_name = 'Platano'
+price_dish = get_price_dish(dish_name)
+if price_dish:
+    print(f"The dish {dish_name}, price: {price_dish}")
 else:
-    print(f"{fruit_name} no encontrado en la base de datos.")
+    print(f"{dish_name} not found in data base.")

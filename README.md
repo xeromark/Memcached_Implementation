@@ -21,10 +21,25 @@ cassandra:
 
     USE mykeyspace;
 
-    CREATE TABLE fruits (
+    CREATE TABLE dishes (
         name text PRIMARY KEY,
-        description text
+        price int
     );
 
-    INSERT INTO fruits (name, description) VALUES ('Platano', 'Una fruta amarilla.');
+# Copy data in docker
 
+    docker cp dishes cassandra:/home/dishes
+
+# Copy data to cassandra bash
+
+    COPY mykeyspace.dishes (name, price) FROM '/home/dishes' WITH DELIMITER='|' AND HEADER=TRUE;
+
+# Insert into dishes table
+
+    INSERT INTO mykeyspace.dishes (name, price) VALUES ('Platano', 145000);
+
+
+---
+# Others:
+
+    SELECT COUNT(*) FROM mykeyspace.dishes;
