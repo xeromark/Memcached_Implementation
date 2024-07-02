@@ -2,11 +2,11 @@
 
     https://hub.docker.com/_/memcached
 
-# attach shell
+# 1) Install pymemcache cassandra-driver in python
 
-    docker exec -it memcached bash
+    pip install pymemcache cassandra-driver
 
-# attach shell
+# 2) attach shell
 
     docker exec -it cassandra cqlsh
 
